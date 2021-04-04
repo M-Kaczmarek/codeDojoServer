@@ -4,29 +4,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
 public class Admission {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String field;
     private String faculty;
     private String capacity;
     private String lecturersPlace;
     private String submissionPlace;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String requirements;
     private String description;
 
     public Admission() {
     }
 
-    public Admission(Long id, String field, String faculty, String capacity, String lecturersPlace, String submissionPlace, Date startDate, Date endDate, String requirements, String description) {
-        this.id = id;
+    public Admission(String field, String faculty, String capacity, String lecturersPlace, String submissionPlace, LocalDate startDate, LocalDate endDate, String requirements, String description) {
         this.field = field;
         this.faculty = faculty;
         this.capacity = capacity;
@@ -86,19 +86,19 @@ public class Admission {
         this.submissionPlace = submissionPlace;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

@@ -42,6 +42,13 @@ public class AdmissionController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<Admission> getAdmissionById(@PathVariable Long id){
+        Admission admission = admissionService.getAdmissionById(id);
+
+        return ResponseEntity.ok(admission);
+    }
+
     @GetMapping("field/{field}")
     public ResponseEntity<List<Admission>> getAdmissionsByField(@PathVariable String field) {
         List<Admission> admissions = admissionService.getAdmissionsByField(field);

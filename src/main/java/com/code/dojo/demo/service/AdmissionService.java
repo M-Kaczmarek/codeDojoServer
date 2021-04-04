@@ -19,6 +19,9 @@ public class AdmissionService {
         return newAdmission;
     }
 
+    public Admission getAdmissionById(Long id){
+        return admissionRepo.findById(id).get();
+    }
     public List<Admission> getALLAdmission(){
         return admissionRepo.findAll();
     }
@@ -28,7 +31,7 @@ public class AdmissionService {
     }
 
     public List<Admission> getAdmissionsByFaculty(String faculty){
-        return admissionRepo.getByField(faculty);
+        return admissionRepo.getByFaculty(faculty);
     }
     public Admission updateAdmission(Admission admission, Long id){
         admission.setId(id);
