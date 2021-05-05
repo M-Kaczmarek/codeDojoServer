@@ -1,11 +1,9 @@
 package com.code.dojo.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +11,8 @@ public class Admission {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String field;
+    @OneToMany(mappedBy = "admission")
+    private List<Field> field;
     private String faculty;
     private String capacity;
     private String lecturersPlace;
@@ -26,7 +25,8 @@ public class Admission {
     public Admission() {
     }
 
-    public Admission(String field, String faculty, String capacity, String lecturersPlace, String submissionPlace, LocalDate startDate, LocalDate endDate, String requirements, String description) {
+    public Admission(Long id, List<Field> field, String faculty, String capacity, String lecturersPlace, String submissionPlace, LocalDate startDate, LocalDate endDate, String requirements, String description) {
+        this.id = id;
         this.field = field;
         this.faculty = faculty;
         this.capacity = capacity;
@@ -46,20 +46,20 @@ public class Admission {
         this.id = id;
     }
 
-    public String getField() {
-        return field;
-    }
-
-    public void setField(String field) {
-        this.field = field;
-    }
-
     public String getFaculty() {
         return faculty;
     }
 
     public void setFaculty(String faculty) {
         this.faculty = faculty;
+    }
+
+    public List<Field> getField() {
+        return field;
+    }
+
+    public void setField(List<Field> field) {
+        this.field = field;
     }
 
     public String getCapacity() {
