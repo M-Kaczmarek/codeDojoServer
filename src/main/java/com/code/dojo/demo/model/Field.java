@@ -67,4 +67,12 @@ public class Field {
     public void setSpecializationList(List<Specialization> specializationList) {
         this.specializationList = specializationList;
     }
+
+    public Admission getAdmission() {
+        return admission;
+    }
+
+    public void setAdmission(Admission admission) {
+        this.admission = admission;
+    }
 }
