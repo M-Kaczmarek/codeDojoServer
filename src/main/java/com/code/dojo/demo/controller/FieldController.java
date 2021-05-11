@@ -1,5 +1,6 @@
 package com.code.dojo.demo.controller;
 
+import com.code.dojo.demo.dto.FieldDto;
 import com.code.dojo.demo.model.Field;
 import com.code.dojo.demo.service.FieldService;
 import org.springframework.http.ResponseEntity;
@@ -19,21 +20,21 @@ public class FieldController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Field>> getAllField(){
+    public ResponseEntity<List<FieldDto>> getAllField(){
         return ResponseEntity.ok(fieldService.getAllField());
     }
     @GetMapping("{name}")
-    public ResponseEntity<Field> getFieldByName(@PathVariable String name){
+    public ResponseEntity<FieldDto> getFieldByName(@PathVariable String name){
         return  ResponseEntity.ok(fieldService.getFieldByName(name));
     }
     @PostMapping
-    public ResponseEntity<Field> addField(@RequestBody Field field){
-        Field addedField = fieldService.addField(field);
+    public ResponseEntity<FieldDto> addField(@RequestBody FieldDto field){
+        FieldDto addedField = fieldService.addField(field);
         return ResponseEntity.created(URI.create("/" + addedField.getId())).body(addedField);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Void> updateField(@PathVariable Long id, @RequestBody Field field){
+    public ResponseEntity<Void> updateField(@PathVariable Long id, @RequestBody FieldDto field){
         fieldService.updateField(id, field);
         return ResponseEntity.noContent().build();
     }

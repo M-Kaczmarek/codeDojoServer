@@ -1,0 +1,96 @@
+package com.code.dojo.demo.dto.utils;
+
+import com.code.dojo.demo.dto.AdmissionDto;
+import com.code.dojo.demo.dto.FieldDto;
+import com.code.dojo.demo.dto.SpecializationDto;
+import com.code.dojo.demo.model.Admission;
+import com.code.dojo.demo.model.Field;
+import com.code.dojo.demo.model.Specialization;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+public class DtoUtils {
+
+    public AdmissionDto convertAdmissionToDto(Admission admission){
+        List<Long> fieldDtoList = new ArrayList<>();
+        AdmissionDto admissionDto = new AdmissionDto();
+        admissionDto.setId(admission.getId());
+        admissionDto.setFaculty(admission.getFaculty());
+        admissionDto.setCapacity(admission.getCapacity());
+        admissionDto.setLecturersPlace(admission.getLecturersPlace());
+        admissionDto.setSubmissionPlace(admission.getSubmissionPlace());
+        admissionDto.setStartDate(admission.getStartDate());
+        admissionDto.setEndDate(admission.getEndDate());
+        admissionDto.setRequirements(admission.getRequirements());
+        admissionDto.setDescription(admission.getDescription());
+        admissionDto.setField(admission.getField() == null ? null: admission.getField().getId());
+
+        return admissionDto;
+    }
+
+    public  FieldDto convertFieldToDto(Field field){
+        List<Long> specializationDtoList = new ArrayList<>();
+        FieldDto fieldDto = new FieldDto();
+        fieldDto.setId(field.getId());
+        fieldDto.setName(field.getName());
+        fieldDto.setBenefits(field.getBenefits());
+        if(field.getSpecializationList()!= null) {
+            for (Specialization specialization : field.getSpecializationList()) {
+                specializationDtoList.add(specialization.getId());
+            }
+            fieldDto.setSpecializationIdList(specializationDtoList);
+        }else {
+            fieldDto.setSpecializationIdList(null);
+        }
+        return fieldDto;
+    }
+
+    public SpecializationDto convertSpecializationToDto(Specialization specialization){
+        SpecializationDto specializationDto = new SpecializationDto();
+        specializationDto.setId(specialization.getId());
+        specializationDto.setName(specialization.getName());
+        specializationDto.setDescription(specialization.getDescription());
+        specializationDto.setKnowledge(specialization.getKnowledge());
+        specializationDto.setJobs(specialization.getJobs());
+
+        return specializationDto;
+    }
+
+    public Admission convertAdmissionDtoToEntity(AdmissionDto admissionDto){
+        Admission admission = new Admission();
+        admission.setId(admissionDto.getId());
+        admission.setFaculty(admissionDto.getFaculty());
+        admission.setCapacity(admissionDto.getCapacity());
+        admission.setLecturersPlace(admissionDto.getLecturersPlace());
+        admission.setSubmissionPlace(admissionDto.getSubmissionPlace());
+        admission.setStartDate(admissionDto.getStartDate());
+        admission.setEndDate(admissionDto.getEndDate());
+        admission.setRequirements(admissionDto.getRequirements());
+        admission.setDescription(admissionDto.getDescription());
+
+        return admission;
+    }
+
+    public Field convertFieldDtoToEntity(FieldDto fieldDto){
+        Field field = new Field();
+        field.setId(fieldDto.getId());
+        field.setName(fieldDto.getName());
+        field.setBenefits(fieldDto.getBenefits());
+
+        return field;
+    }
+
+    public Specialization convertSpecializationDtoToEntity(SpecializationDto specializationDto){
+        Specialization specialization = new Specialization();
+        specialization.setId(specializationDto.getId());
+        specialization.setName(specializationDto.getName());
+        specialization.setDescription(specializationDto.getDescription());
+        specialization.setKnowledge(specializationDto.getKnowledge());
+        specialization.setJobs(specializationDto.getJobs());
+
+        return specialization;
+    }
+}

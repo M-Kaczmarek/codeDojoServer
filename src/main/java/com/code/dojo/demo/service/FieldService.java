@@ -1,35 +1,70 @@
 package com.code.dojo.demo.service;
 
+import com.code.dojo.demo.dto.FieldDto;
+import com.code.dojo.demo.dto.utils.DtoUtils;
+import com.code.dojo.demo.model.Admission;
 import com.code.dojo.demo.model.Field;
+import com.code.dojo.demo.model.Specialization;
+import com.code.dojo.demo.repository.AdmissionRepository;
 import com.code.dojo.demo.repository.FieldRepository;
+import com.code.dojo.demo.repository.SpecializationRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FieldService {
 
     private final FieldRepository fieldRepository;
+    private final SpecializationRepository specializationRepository;
+    private final AdmissionRepository admissionRepository;
+    private final DtoUtils dtoUtils;
 
-    public FieldService(final FieldRepository fieldRepository) {
+    public FieldService(FieldRepository fieldRepository, SpecializationRepository specializationRepository, AdmissionRepository admissionRepository, DtoUtils dtoUtils) {
         this.fieldRepository = fieldRepository;
+        this.specializationRepository = specializationRepository;
+        this.admissionRepository = admissionRepository;
+        this.dtoUtils = dtoUtils;
     }
 
-    public List<Field> getAllField(){
-        return fieldRepository.findAll();
+    public List<FieldDto> getAllField(){
+        List<FieldDto> result = new ArrayList<>();
+        for (Field field : fieldRepository.findAll()) {
+            result.add(dtoUtils.convertFieldToDto(field));
+        }
+        return result;
     }
 
-    public Field getFieldByName(final String name){
-        return fieldRepository.getFieldByName(name);
+    public FieldDto getFieldByName(final String name){
+        return dtoUtils.convertFieldToDto(fieldRepository.getFieldByName(name));
     }
 
-    public Field addField(final Field field){
-        return  fieldRepository.save(field);
+    public FieldDto addField(final FieldDto field){
+        Field newField = dtoUtils.convertFieldDtoToEntity(field);
+        addSpecialization(field, newField);
+        return dtoUtils.convertFieldToDto(fieldRepository.save(newField));
     }
 
-    public Field updateField(Long id, Field field){
+    private void addSpecialization(FieldDto field, Field newField) {
+        if(field.getSpecializationIdList()!=null){
+            List<Specialization> specializationList = new ArrayList<>();
+            for (Long idSpecialization : field.getSpecializationIdList()) {
+                Optional<Specialization> specialization = specializationRepository.findById(idSpecialization);
+                if(specialization.isPresent()){
+                    specializationList.add(specialization.get());
+                }
+            }
+            newField.setSpecializationList(specializationList);
+        }
+    }
+
+    public FieldDto updateField(Long id, FieldDto field){
+        Field newField = dtoUtils.convertFieldDtoToEntity(field);
         field.setId(id);
-        return fieldRepository.save(field);
+        addSpecialization(field, newField);
+        return dtoUtils.convertFieldToDto(fieldRepository.save(newField));
     }
 
     public void deleteFieldById(final Long id){

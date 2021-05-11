@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface AdmissionRepository extends JpaRepository<Admission, Long> {
-     List<Admission> getByField(String field);
-     List<Admission> getByFaculty(String faculty);
+   List<Admission> getByFaculty(String faculty);
 }

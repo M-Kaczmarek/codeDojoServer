@@ -1,4 +1,5 @@
 package com.code.dojo.demo.controller;
+import com.code.dojo.demo.dto.SpecializationDto;
 import com.code.dojo.demo.service.SpecializationService;
 import com.code.dojo.demo.model.Specialization;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +19,19 @@ public class SpecializationController {
     }
 
     @PostMapping
-    public ResponseEntity<Specialization> addSpecialization(@RequestBody Specialization specialization) {
-        Specialization result = specializationService.addSpecialization(specialization);
+    public ResponseEntity<SpecializationDto> addSpecialization(@RequestBody SpecializationDto specialization) {
+        SpecializationDto result = specializationService.addSpecialization(specialization);
 
         return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
     }
 
     @GetMapping
-    public ResponseEntity<List<Specialization>> getAllSpecialization() {
+    public ResponseEntity<List<SpecializationDto>> getAllSpecialization() {
         return ResponseEntity.ok(specializationService.getAllSpecialization());
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Specialization> updateSpecialization(@PathVariable Long id, @RequestBody Specialization specialization) {
+    public ResponseEntity<SpecializationDto> updateSpecialization(@PathVariable Long id, @RequestBody SpecializationDto specialization) {
         specializationService.updateSpecialization(id, specialization);
         return ResponseEntity.noContent().build();
     }
@@ -43,7 +44,7 @@ public class SpecializationController {
     }
 
     @GetMapping("name/{name}")
-    public ResponseEntity<Specialization> getSpecializationByName(@PathVariable String name){
+    public ResponseEntity<SpecializationDto> getSpecializationByName(@PathVariable String name){
         return ResponseEntity.ok(specializationService.getSpecializationByName(name));
     }
 }

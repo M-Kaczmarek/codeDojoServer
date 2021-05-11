@@ -10,11 +10,9 @@ public class Field {
     private Long id;
     private String name;
     private String benefits;
-    @ManyToOne
-    @JoinColumn(name = "admission_id")
-    private Admission admission;
     private Faculty faculty;
-    @OneToMany(mappedBy = "field")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "field_id")
     private List<Specialization> specializationList;
 
     public Field() {
@@ -66,13 +64,5 @@ public class Field {
 
     public void setSpecializationList(List<Specialization> specializationList) {
         this.specializationList = specializationList;
-    }
-
-    public Admission getAdmission() {
-        return admission;
-    }
-
-    public void setAdmission(Admission admission) {
-        this.admission = admission;
     }
 }

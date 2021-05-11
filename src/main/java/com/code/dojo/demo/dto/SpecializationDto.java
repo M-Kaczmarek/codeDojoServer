@@ -1,26 +1,33 @@
-package com.code.dojo.demo.model;
+package com.code.dojo.demo.dto;
 
-import javax.persistence.*;
+import com.code.dojo.demo.model.Field;
 
-@Entity
-public class Specialization {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+public class SpecializationDto {
     private Long id;
     private String name;
     private String description;
     private String knowledge;
     private String jobs;
 
-    public Specialization() {
-    }
-
-    public Specialization(Long id, String name, String description, String knowledge, String jobs) {
+    public SpecializationDto(Long id,  String name, String description, String knowledge, String jobs) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.knowledge = knowledge;
         this.jobs = jobs;
+    }
+
+    public SpecializationDto(String name, String description, String knowledge, String jobs) {
+        this.name = name;
+        this.description = description;
+        this.knowledge = knowledge;
+        this.jobs = jobs;
+    }
+
+    public SpecializationDto() {
     }
 
     public Long getId() {

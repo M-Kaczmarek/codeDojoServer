@@ -1,20 +1,14 @@
-package com.code.dojo.demo.model;
+package com.code.dojo.demo.dto;
 
-import org.hibernate.secure.spi.IntegrationException;
+import com.code.dojo.demo.model.Field;
 
-import javax.persistence.*;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
-@Entity
-public class Admission {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class AdmissionDto {
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Field field;
+    private Long field;
     private String faculty;
     private Integer capacity;
     private String lecturersPlace;
@@ -24,10 +18,7 @@ public class Admission {
     private String requirements;
     private String description;
 
-    public Admission() {
-    }
-
-    public Admission(Long id, Field field, String faculty, Integer capacity, String lecturersPlace, String submissionPlace, LocalDate startDate, LocalDate endDate, String requirements, String description) {
+    public AdmissionDto(Long id, Long field, String faculty, Integer capacity, String lecturersPlace, String submissionPlace, LocalDate startDate, LocalDate endDate, String requirements, String description) {
         this.id = id;
         this.field = field;
         this.faculty = faculty;
@@ -40,6 +31,21 @@ public class Admission {
         this.description = description;
     }
 
+    public AdmissionDto(Long field, String faculty, Integer capacity, String lecturersPlace, String submissionPlace, LocalDate startDate, LocalDate endDate, String requirements, String description) {
+        this.field = field;
+        this.faculty = faculty;
+        this.capacity = capacity;
+        this.lecturersPlace = lecturersPlace;
+        this.submissionPlace = submissionPlace;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.requirements = requirements;
+        this.description = description;
+    }
+
+    public AdmissionDto() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -48,20 +54,20 @@ public class Admission {
         this.id = id;
     }
 
+    public Long getField() {
+        return field;
+    }
+
+    public void setField(Long field) {
+        this.field = field;
+    }
+
     public String getFaculty() {
         return faculty;
     }
 
     public void setFaculty(String faculty) {
         this.faculty = faculty;
-    }
-
-    public Field getField() {
-        return field;
-    }
-
-    public void setField(Field field) {
-        this.field = field;
     }
 
     public Integer getCapacity() {
@@ -118,18 +124,5 @@ public class Admission {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Admission admission = (Admission) o;
-        return Objects.equals(id, admission.id) && Objects.equals(field, admission.field) && Objects.equals(faculty, admission.faculty) && Objects.equals(capacity, admission.capacity) && Objects.equals(lecturersPlace, admission.lecturersPlace) && Objects.equals(submissionPlace, admission.submissionPlace) && Objects.equals(startDate, admission.startDate) && Objects.equals(endDate, admission.endDate) && Objects.equals(requirements, admission.requirements) && Objects.equals(description, admission.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, field, faculty, capacity, lecturersPlace, submissionPlace, startDate, endDate, requirements, description);
     }
 }

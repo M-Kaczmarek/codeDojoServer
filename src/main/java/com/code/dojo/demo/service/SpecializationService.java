@@ -1,37 +1,53 @@
 package com.code.dojo.demo.service;
 
+import com.code.dojo.demo.dto.SpecializationDto;
+import com.code.dojo.demo.dto.utils.DtoUtils;
+import com.code.dojo.demo.model.Field;
 import com.code.dojo.demo.model.Specialization;
+import com.code.dojo.demo.repository.FieldRepository;
 import com.code.dojo.demo.repository.SpecializationRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SpecializationService {
     private SpecializationRepository specializationRepository;
+    private FieldRepository fieldRepository;
+    private DtoUtils dtoUtils;
 
-    public SpecializationService(SpecializationRepository specializationRepository) {
+    public SpecializationService(SpecializationRepository specializationRepository, FieldRepository fieldRepository, DtoUtils dtoUtils) {
         this.specializationRepository = specializationRepository;
+        this.fieldRepository = fieldRepository;
+        this.dtoUtils = dtoUtils;
     }
 
-    public Specialization addSpecialization(Specialization specialization) {
-        return specializationRepository.save(specialization);
+    public SpecializationDto addSpecialization(SpecializationDto specialization) {
+        Specialization newSpecialization = dtoUtils.convertSpecializationDtoToEntity(specialization);
+       return dtoUtils.convertSpecializationToDto(specializationRepository.save(newSpecialization));
     }
 
-    public List<Specialization> getAllSpecialization() {
-        return specializationRepository.findAll();
+    public List<SpecializationDto> getAllSpecialization() {
+        List<SpecializationDto> result = new ArrayList<>();
+        for (Specialization specialization : specializationRepository.findAll()) {
+            result.add(dtoUtils.convertSpecializationToDto(specialization));
+        }
+
+        return result;
     }
 
-    public Specialization updateSpecialization(Long id, Specialization specialization){
+    public SpecializationDto updateSpecialization(Long id, SpecializationDto specialization){
         specialization.setId(id);
-        return specializationRepository.save(specialization);
+        return dtoUtils.convertSpecializationToDto(specializationRepository.save(dtoUtils.convertSpecializationDtoToEntity(specialization)));
     }
 
     public void deleteSpecializationById(Long id){
         specializationRepository.deleteById(id);
     }
 
-    public Specialization getSpecializationByName(String name){
-       return specializationRepository.getSpecializationByName(name);
+    public SpecializationDto getSpecializationByName(String name){
+       return dtoUtils.convertSpecializationToDto(specializationRepository.getSpecializationByName(name));
     }
 }

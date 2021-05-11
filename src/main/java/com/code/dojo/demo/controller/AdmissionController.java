@@ -1,5 +1,6 @@
 package com.code.dojo.demo.controller;
 
+import com.code.dojo.demo.dto.AdmissionDto;
 import com.code.dojo.demo.model.Admission;
 import com.code.dojo.demo.service.AdmissionService;
 import org.springframework.http.ResponseEntity;
@@ -18,20 +19,20 @@ public class AdmissionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Admission>> getAllAdmission() {
-        List<Admission> admission = admissionService.getALLAdmission();
+    public ResponseEntity<List<AdmissionDto>> getAllAdmission() {
+        List<AdmissionDto> admission = admissionService.getALLAdmission();
         return ResponseEntity.ok(admission);
     }
 
     @PostMapping
-    public ResponseEntity<Admission> addAdmission(@RequestBody Admission admission) {
-        Admission result = admissionService.createAdmission(admission);
+    public ResponseEntity<AdmissionDto> addAdmission(@RequestBody AdmissionDto admission) {
+        AdmissionDto result = admissionService.createAdmission(admission);
         return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Admission> updateAdmission(@PathVariable Long id, @RequestBody Admission admission) {
-        Admission updateAdmission = admissionService.updateAdmission(admission, id);
+    public ResponseEntity<AdmissionDto> updateAdmission(@PathVariable Long id, @RequestBody AdmissionDto admission) {
+        AdmissionDto updateAdmission = admissionService.updateAdmission(admission, id);
         return ResponseEntity.noContent().build();
     }
 
@@ -43,22 +44,22 @@ public class AdmissionController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Admission> getAdmissionById(@PathVariable Long id){
-        Admission admission = admissionService.getAdmissionById(id);
+    public ResponseEntity<AdmissionDto> getAdmissionById(@PathVariable Long id){
+        AdmissionDto admission = admissionService.getAdmissionById(id);
 
         return ResponseEntity.ok(admission);
     }
 
-    @GetMapping("field/{field}")
-    public ResponseEntity<List<Admission>> getAdmissionsByField(@PathVariable String field) {
-        List<Admission> admissions = admissionService.getAdmissionsByField(field);
+    @GetMapping("field/{id}")
+    public ResponseEntity<AdmissionDto> getAdmissionsByField(@PathVariable String id) {
+        AdmissionDto admissions = admissionService.getAdmissionsByField(id);
 
         return ResponseEntity.ok(admissions);
     }
 
-    @GetMapping("faculty/{faculty}")
-    public ResponseEntity<List<Admission>> getAdmissionsByFaculty(@PathVariable String faculty) {
-        List<Admission> admissions = admissionService.getAdmissionsByFaculty(faculty);
+    @GetMapping("faculty/{id}")
+    public ResponseEntity<List<AdmissionDto>> getAdmissionsByFaculty(@PathVariable String id) {
+        List<AdmissionDto> admissions = admissionService.getAdmissionsByFaculty(id);
 
         return ResponseEntity.ok(admissions);
     }
