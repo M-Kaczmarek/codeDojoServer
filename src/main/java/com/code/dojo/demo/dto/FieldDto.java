@@ -11,19 +11,33 @@ public class FieldDto {
     private Long id;
     private String name;
     private String benefits;
-   private List<Long> specializationIdList;
+    private String identifier;
+    private String description;
+    private String imageUrn;
+    private Faculty faculty;
+    private List<String> specializations;
 
-    public FieldDto(Long id, String name, String benefits, List<Long> specializationIdList) {
+    public FieldDto(Long id, String name, String benefits, String identifier, String description, String imageUrn,
+                    Faculty faculty, List<String> specializations) {
         this.id = id;
         this.name = name;
         this.benefits = benefits;
-        this.specializationIdList = specializationIdList;
+        this.faculty = faculty;
+        this.identifier = identifier;
+        this.description = description;
+        this.imageUrn = imageUrn;
+        this.specializations = specializations;
     }
 
-    public FieldDto(String name, String benefits, List<Long> specializationIdList) {
+    public FieldDto(String name, String benefits, String identifier, String description, String imageUrn,
+                    Faculty faculty, List<String> specializations) {
         this.name = name;
         this.benefits = benefits;
-        this.specializationIdList = specializationIdList;
+        this.faculty = faculty;
+        this.identifier = identifier;
+        this.description = description;
+        this.imageUrn = imageUrn;
+        this.specializations = specializations;
     }
 
     public FieldDto() {
@@ -53,11 +67,43 @@ public class FieldDto {
         this.benefits = benefits;
     }
 
-    public List<Long> getSpecializationIdList() {
-        return specializationIdList;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setSpecializationIdList(List<Long> specializationIdList) {
-        this.specializationIdList = specializationIdList;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrn() {
+        return imageUrn;
+    }
+
+    public void setImageUrn(String imageUrn) {
+        this.imageUrn = imageUrn;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    public Faculty getFaculty() {
+        return this.faculty;
+    }
+
+    public List<String> getSpecializations() {
+        return specializations;
+    }
+
+    public void setSpecializations(List<String> specializations) {
+        this.specializations = specializations;
     }
 }

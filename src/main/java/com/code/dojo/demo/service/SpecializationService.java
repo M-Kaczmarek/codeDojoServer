@@ -24,9 +24,18 @@ public class SpecializationService {
         this.dtoUtils = dtoUtils;
     }
 
-    public SpecializationDto addSpecialization(SpecializationDto specialization) {
-        Specialization newSpecialization = dtoUtils.convertSpecializationDtoToEntity(specialization);
-       return dtoUtils.convertSpecializationToDto(specializationRepository.save(newSpecialization));
+    public SpecializationDto addSpecialization(SpecializationDto specializationDto) {
+        Specialization specialization = dtoUtils.convertSpecializationDtoToEntity(specializationDto);
+        addField(specializationDto, specialization);
+
+        return dtoUtils.convertSpecializationToDto(specializationRepository.save(specialization));
+    }
+
+    private void addField(SpecializationDto specializationDto, Specialization specialization) {
+        if (specializationDto.getField() != null) {
+            Optional<Field> field = Optional.ofNullable(fieldRepository.getFieldByIdentifier(specializationDto.getField()));
+            field.ifPresent(specialization::setField);
+        }
     }
 
     public List<SpecializationDto> getAllSpecialization() {
@@ -38,16 +47,16 @@ public class SpecializationService {
         return result;
     }
 
-    public SpecializationDto updateSpecialization(Long id, SpecializationDto specialization){
+    public SpecializationDto updateSpecialization(Long id, SpecializationDto specialization) {
         specialization.setId(id);
         return dtoUtils.convertSpecializationToDto(specializationRepository.save(dtoUtils.convertSpecializationDtoToEntity(specialization)));
     }
 
-    public void deleteSpecializationById(Long id){
+    public void deleteSpecializationById(Long id) {
         specializationRepository.deleteById(id);
     }
 
-    public SpecializationDto getSpecializationByName(String name){
-       return dtoUtils.convertSpecializationToDto(specializationRepository.getSpecializationByName(name));
+    public SpecializationDto getSpecializationByName(String name) {
+        return dtoUtils.convertSpecializationToDto(specializationRepository.getSpecializationByIdentifier(name));
     }
 }

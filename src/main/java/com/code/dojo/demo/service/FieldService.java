@@ -22,14 +22,15 @@ public class FieldService {
     private final AdmissionRepository admissionRepository;
     private final DtoUtils dtoUtils;
 
-    public FieldService(FieldRepository fieldRepository, SpecializationRepository specializationRepository, AdmissionRepository admissionRepository, DtoUtils dtoUtils) {
+    public FieldService(FieldRepository fieldRepository, SpecializationRepository specializationRepository,
+                        AdmissionRepository admissionRepository, DtoUtils dtoUtils) {
         this.fieldRepository = fieldRepository;
         this.specializationRepository = specializationRepository;
         this.admissionRepository = admissionRepository;
         this.dtoUtils = dtoUtils;
     }
 
-    public List<FieldDto> getAllField(){
+    public List<FieldDto> getAllField() {
         List<FieldDto> result = new ArrayList<>();
         for (Field field : fieldRepository.findAll()) {
             result.add(dtoUtils.convertFieldToDto(field));
@@ -37,37 +38,35 @@ public class FieldService {
         return result;
     }
 
-    public FieldDto getFieldByName(final String name){
-        return dtoUtils.convertFieldToDto(fieldRepository.getFieldByName(name));
+    public FieldDto getFieldByName(final String name) {
+        return dtoUtils.convertFieldToDto(fieldRepository.getFieldByIdentifier(name));
     }
 
-    public FieldDto addField(final FieldDto field){
+    public FieldDto addField(final FieldDto field) {
         Field newField = dtoUtils.convertFieldDtoToEntity(field);
         addSpecialization(field, newField);
         return dtoUtils.convertFieldToDto(fieldRepository.save(newField));
     }
 
     private void addSpecialization(FieldDto field, Field newField) {
-        if(field.getSpecializationIdList()!=null){
+        if (field.getSpecializations() != null) {
             List<Specialization> specializationList = new ArrayList<>();
-            for (Long idSpecialization : field.getSpecializationIdList()) {
-                Optional<Specialization> specialization = specializationRepository.findById(idSpecialization);
-                if(specialization.isPresent()){
-                    specializationList.add(specialization.get());
-                }
+            for (String identifierSpecialization : field.getSpecializations()) {
+                Optional<Specialization> specialization = Optional.ofNullable(specializationRepository.getSpecializationByIdentifier(identifierSpecialization));
+                specialization.ifPresent(specializationList::add);
             }
             newField.setSpecializationList(specializationList);
         }
     }
 
-    public FieldDto updateField(Long id, FieldDto field){
+    public FieldDto updateField(Long id, FieldDto field) {
         Field newField = dtoUtils.convertFieldDtoToEntity(field);
-        field.setId(id);
+        newField.setId(id);
         addSpecialization(field, newField);
         return dtoUtils.convertFieldToDto(fieldRepository.save(newField));
     }
 
-    public void deleteFieldById(final Long id){
+    public void deleteFieldById(final Long id) {
         fieldRepository.deleteById(id);
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AdmissionDto {
     private Long id;
-    private Long field;
+    private String field;
     private String faculty;
     private Integer capacity;
     private String lecturersPlace;
@@ -18,7 +18,7 @@ public class AdmissionDto {
     private String requirements;
     private String description;
 
-    public AdmissionDto(Long id, Long field, String faculty, Integer capacity, String lecturersPlace, String submissionPlace, LocalDate startDate, LocalDate endDate, String requirements, String description) {
+    public AdmissionDto(Long id, String field, String faculty, Integer capacity, String lecturersPlace, String submissionPlace, LocalDate startDate, LocalDate endDate, String requirements, String description) {
         this.id = id;
         this.field = field;
         this.faculty = faculty;
@@ -31,7 +31,7 @@ public class AdmissionDto {
         this.description = description;
     }
 
-    public AdmissionDto(Long field, String faculty, Integer capacity, String lecturersPlace, String submissionPlace, LocalDate startDate, LocalDate endDate, String requirements, String description) {
+    public AdmissionDto(String field, String faculty, Integer capacity, String lecturersPlace, String submissionPlace, LocalDate startDate, LocalDate endDate, String requirements, String description) {
         this.field = field;
         this.faculty = faculty;
         this.capacity = capacity;
@@ -54,11 +54,11 @@ public class AdmissionDto {
         this.id = id;
     }
 
-    public Long getField() {
+    public String getField() {
         return field;
     }
 
-    public void setField(Long field) {
+    public void setField(String field) {
         this.field = field;
     }
 

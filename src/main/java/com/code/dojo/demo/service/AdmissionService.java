@@ -33,7 +33,7 @@ public class AdmissionService {
 
     private void addField(AdmissionDto admissionDto, Admission admission) {
         if(admissionDto.getField() != null){
-            Optional<Field> field = fieldRepository.findById(admissionDto.getField());
+            Optional<Field> field = Optional.ofNullable(fieldRepository.getFieldByIdentifier(admissionDto.getField()));
             if(field.isPresent()){
                 admission.setField(field.get());
             }
@@ -54,9 +54,9 @@ public class AdmissionService {
         List<AdmissionDto> admissionDtoList = new ArrayList<>();
         admissionRepo.findAll().forEach(i -> admissionDtoList.add(dtoUtils.convertAdmissionToDto(i)));
         for (AdmissionDto admissionDto : admissionDtoList) {
-                if(admissionDto.getField().toString() == id) {
-                     admissionDtoByField = admissionDto;
-                }
+            if(admissionDto.getField().equals(id)) {
+                admissionDtoByField = admissionDto;
+            }
         }
         return admissionDtoByField;
     }
