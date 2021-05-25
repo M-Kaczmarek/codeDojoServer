@@ -11,20 +11,26 @@ public class SpecializationDto {
     private String description;
     private String knowledge;
     private String jobs;
+    private String identifier;
+    private String field;
 
-    public SpecializationDto(Long id,  String name, String description, String knowledge, String jobs) {
+    public SpecializationDto(Long id, String name, String description, String knowledge, String jobs, String identifier, String field) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.knowledge = knowledge;
         this.jobs = jobs;
+        this.identifier = identifier;
+        this.field = field;
     }
 
-    public SpecializationDto(String name, String description, String knowledge, String jobs) {
+    public SpecializationDto(String name, String description, String knowledge, String jobs, String identifier, String field) {
         this.name = name;
         this.description = description;
         this.knowledge = knowledge;
         this.jobs = jobs;
+        this.identifier = identifier;
+        this.field = field;
     }
 
     public SpecializationDto() {
@@ -68,5 +74,21 @@ public class SpecializationDto {
 
     public void setJobs(String jobs) {
         this.jobs = jobs;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
     }
 }

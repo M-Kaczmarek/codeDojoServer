@@ -8,21 +8,34 @@ public class Field {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
+
+    @Column(columnDefinition="TEXT")
     private String benefits;
+
+    private String identifier;
+
+    @Column(columnDefinition="TEXT")
+    private String description;
+    private String imageUrn;
     private Faculty faculty;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "field_id")
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "field")
     private List<Specialization> specializationList;
 
     public Field() {
     }
 
-    public Field(Long id, String name, String benefits, Faculty faculty, List<Specialization> specializationList) {
+    public Field(Long id, String name, String benefits, String identifier, String description, Faculty faculty,
+                 String imageUrn, List<Specialization> specializationList) {
         this.id = id;
         this.name = name;
         this.benefits = benefits;
         this.faculty = faculty;
+        this.identifier = identifier;
+        this.description = description;
+        this.imageUrn = imageUrn;
         this.specializationList = specializationList;
     }
 
@@ -50,12 +63,36 @@ public class Field {
         this.benefits = benefits;
     }
 
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Faculty getFaculty() {
         return faculty;
     }
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
+    }
+
+    public String getImageUrn() {
+        return imageUrn;
+    }
+
+    public void setImageUrn(String imageUrn) {
+        this.imageUrn = imageUrn;
     }
 
     public List<Specialization> getSpecializationList() {

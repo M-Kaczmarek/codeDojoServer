@@ -14,8 +14,7 @@ import java.util.List;
 @Component
 public class DtoUtils {
 
-    public AdmissionDto convertAdmissionToDto(Admission admission){
-        List<Long> fieldDtoList = new ArrayList<>();
+    public AdmissionDto convertAdmissionToDto(Admission admission) {
         AdmissionDto admissionDto = new AdmissionDto();
         admissionDto.setId(admission.getId());
         admissionDto.setFaculty(admission.getFaculty());
@@ -26,40 +25,46 @@ public class DtoUtils {
         admissionDto.setEndDate(admission.getEndDate());
         admissionDto.setRequirements(admission.getRequirements());
         admissionDto.setDescription(admission.getDescription());
-        admissionDto.setField(admission.getField() == null ? null: admission.getField().getId());
+        admissionDto.setField(admission.getField() == null ? null : admission.getField().getIdentifier());
 
         return admissionDto;
     }
 
-    public  FieldDto convertFieldToDto(Field field){
-        List<Long> specializationDtoList = new ArrayList<>();
+    public FieldDto convertFieldToDto(Field field) {
+        List<String> specializationDtoList = new ArrayList<>();
         FieldDto fieldDto = new FieldDto();
         fieldDto.setId(field.getId());
         fieldDto.setName(field.getName());
         fieldDto.setBenefits(field.getBenefits());
-        if(field.getSpecializationList()!= null) {
+        fieldDto.setFaculty(field.getFaculty());
+        fieldDto.setIdentifier(field.getIdentifier());
+        fieldDto.setImageUrn(field.getImageUrn());
+        fieldDto.setDescription(field.getDescription());
+        if (field.getSpecializationList() != null) {
             for (Specialization specialization : field.getSpecializationList()) {
-                specializationDtoList.add(specialization.getId());
+                specializationDtoList.add(specialization.getIdentifier());
             }
-            fieldDto.setSpecializationIdList(specializationDtoList);
-        }else {
-            fieldDto.setSpecializationIdList(null);
+            fieldDto.setSpecializations(specializationDtoList);
+        } else {
+            fieldDto.setSpecializations(null);
         }
         return fieldDto;
     }
 
-    public SpecializationDto convertSpecializationToDto(Specialization specialization){
+    public SpecializationDto convertSpecializationToDto(Specialization specialization) {
         SpecializationDto specializationDto = new SpecializationDto();
         specializationDto.setId(specialization.getId());
         specializationDto.setName(specialization.getName());
         specializationDto.setDescription(specialization.getDescription());
         specializationDto.setKnowledge(specialization.getKnowledge());
         specializationDto.setJobs(specialization.getJobs());
+        specializationDto.setIdentifier(specialization.getIdentifier());
+        specializationDto.setField(specialization.getField().getIdentifier());
 
         return specializationDto;
     }
 
-    public Admission convertAdmissionDtoToEntity(AdmissionDto admissionDto){
+    public Admission convertAdmissionDtoToEntity(AdmissionDto admissionDto) {
         Admission admission = new Admission();
         admission.setId(admissionDto.getId());
         admission.setFaculty(admissionDto.getFaculty());
@@ -74,22 +79,27 @@ public class DtoUtils {
         return admission;
     }
 
-    public Field convertFieldDtoToEntity(FieldDto fieldDto){
+    public Field convertFieldDtoToEntity(FieldDto fieldDto) {
         Field field = new Field();
         field.setId(fieldDto.getId());
         field.setName(fieldDto.getName());
         field.setBenefits(fieldDto.getBenefits());
+        field.setFaculty(fieldDto.getFaculty());
+        field.setIdentifier(fieldDto.getIdentifier());
+        field.setDescription(fieldDto.getDescription());
+        field.setImageUrn(fieldDto.getImageUrn());
 
         return field;
     }
 
-    public Specialization convertSpecializationDtoToEntity(SpecializationDto specializationDto){
+    public Specialization convertSpecializationDtoToEntity(SpecializationDto specializationDto) {
         Specialization specialization = new Specialization();
         specialization.setId(specializationDto.getId());
         specialization.setName(specializationDto.getName());
         specialization.setDescription(specializationDto.getDescription());
         specialization.setKnowledge(specializationDto.getKnowledge());
         specialization.setJobs(specializationDto.getJobs());
+        specialization.setIdentifier(specializationDto.getIdentifier());
 
         return specialization;
     }

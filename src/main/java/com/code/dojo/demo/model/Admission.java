@@ -13,6 +13,7 @@ public class Admission {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Field field;
     private String faculty;
@@ -21,7 +22,11 @@ public class Admission {
     private String submissionPlace;
     private LocalDate startDate;
     private LocalDate endDate;
+
+    @Column(columnDefinition="TEXT")
     private String requirements;
+
+    @Column(columnDefinition="TEXT")
     private String description;
 
     public Admission() {

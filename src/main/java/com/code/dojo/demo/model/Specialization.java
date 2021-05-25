@@ -8,19 +8,32 @@ public class Specialization {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+
+    @Column(columnDefinition="TEXT")
     private String description;
+
+    @Column(columnDefinition="TEXT")
     private String knowledge;
+
+    @Column(columnDefinition="TEXT")
     private String jobs;
+    private String identifier;
+
+    @ManyToOne
+    @JoinColumn(name = "field_id")
+    private Field field;
 
     public Specialization() {
     }
 
-    public Specialization(Long id, String name, String description, String knowledge, String jobs) {
+    public Specialization(Long id, String name, String description, String knowledge, String jobs, String identifier, Field field) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.knowledge = knowledge;
         this.jobs = jobs;
+        this.identifier = identifier;
+        this.field = field;
     }
 
     public Long getId() {
@@ -61,5 +74,21 @@ public class Specialization {
 
     public void setJobs(String jobs) {
         this.jobs = jobs;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public Field getField() {
+        return field;
+    }
+
+    public void setField(Field field) {
+        this.field = field;
     }
 }
